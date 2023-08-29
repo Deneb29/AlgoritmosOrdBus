@@ -7,20 +7,26 @@ import java.util.StringTokenizer;
 
 public class Tarea2 {
     public static void main(String[] args) {
-        String s,i,t,codificado,decodificado;
-        int vocales,cons,digitos,caracteres,espacios,palabras,letras;
+        String s,i,t,codificado,decodificado,codificado2;
+        int vocales,cons,digitos,caracteres,espacios,palabras,letras,l;
         char[] array;
         StringTokenizer tokens;
         byte[] bytesDecodificado;
+        String clave="JULIO";
+        String CODIGO="6789704086";
+        int pos[]={2,5,3,1,4};
+        char lts[][] =new char[20][clave.length()];
+
 
         s=guardarString("Ingrese un texto");
         do {
-            t="";
+            t=codificado2="";
             tokens=new StringTokenizer(s," ");
             //array=new char[s.length()];
             array=s.toCharArray();
             letras=cons=vocales=digitos=caracteres=espacios=palabras=0;
             codificado=Base64.getEncoder().encodeToString(s.getBytes());
+            l=0;
             i = JOptionPane.showInputDialog("Seleccione la opcion deseada:\n" +
                     "1.- Leer String\n" +
                     "2.- Obtener longitud\n" +
@@ -35,6 +41,10 @@ public class Tarea2 {
                     "11.- Invertir string\n" +
                     "12.- Encriptar\n" +
                     "13.- Desencriptar\n" +
+                    "14.- Encriptar JULIO VERNE \n" +
+                    "15.- Desencriptar JULIO VERNE\n" +
+                    "16.- Encriptar método propio\n" +
+                    "17.- Desencriptar método propio" +
                     "0.- Salir", null);
             switch (i){
                 case "1":
@@ -116,6 +126,43 @@ public class Tarea2 {
                     decodificado = new String(bytesDecodificado);
                     JOptionPane.showMessageDialog(null, "El string decodificado es "+decodificado);
                     break;
+                case "14":
+                    codificado=s.replace(' ','%');
+                    String [] codarray= {"","","","",""};
+                    for (int j=0;j<20;j++) {
+                        for(int k=0;k<clave.length();k++){
+                            if(l<codificado.length()) {
+                                lts[j][k] = codificado.charAt(l);
+                            }
+                            l++;
+                        }
+                    }
+                        for(int col=0;col<clave.length();col++) {
+                            int m=pos[col]-1;
+                            for (int fila = 0; fila < 20; fila++) {
+                                if(lts[fila][col] != 0){
+                                    codarray[m]+=lts[fila][col];
+                                }
+                            }
+                        }
+                    for (String st:
+                         codarray) {
+                        codificado2+=st;
+                    }
+
+
+                    JOptionPane.showMessageDialog(null, "El string codificado es "+codificado2);
+                    break;
+
+                case "16":
+                    for(char c : s.toCharArray()) {
+                        if (isVocal(c)) {
+                            codificado2 += '*';
+                        } else{
+                            codificado2 += (char) (c + 8);
+                        }
+                    }
+                    JOptionPane.showMessageDialog(null, "El string codificado es "+codificado2);
             }
         }while(!i.equals("0"));
     }
