@@ -1,12 +1,13 @@
-package unidad1.tarea2;
+package unidad1.tarea4;
 
 import javax.swing.*;
 import java.util.StringTokenizer;
 
 
-public class Tarea2 {
+public class Tarea4 {
     public static void main(String[] args) {
         String s,i;
+        String [] nombres=new String[10];
 
         s=guardarString("Ingrese un texto");
         do {
@@ -80,7 +81,7 @@ public class Tarea2 {
         return JOptionPane.showInputDialog(mensaje,null).trim();
     }
     public static boolean isVocal(char c) {
-        return (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u'|| c == '·'|| c == 'È'|| c == 'Ì'|| c == 'Û'|| c == '˙'|| c == 'A'|| c == 'E'|| c == 'I'|| c == 'O'|| c == 'U'|| c == '¡'|| c == '…'|| c == 'Õ'|| c == '”'|| c == '⁄');
+        return (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u'|| c == '√°'|| c == '√©'|| c == '√≠'|| c == '√≥'|| c == '√∫'|| c == 'A'|| c == 'E'|| c == 'I'|| c == 'O'|| c == 'U'|| c == '√Å'|| c == '√â'|| c == '√ç'|| c == '√ì'|| c == '√ö');
     }
     public static void getLongitud(String s){
         JOptionPane.showMessageDialog(null, "La logitud del string es "+s.length());
@@ -270,24 +271,24 @@ public class Tarea2 {
         }
 
 
-                if(l==1){
-                    stb.insert(clave.length()*5,sobrantes[0]);
-                }
-                if(l==2){
-                    stb.insert(clave.length()*5,sobrantes[0]);
-                    stb.insert(clave.length()*4,sobrantes[1]);
-                }
-                if (l==3){
-                    stb.insert(clave.length()*5,sobrantes[0]);
-                    stb.insert(clave.length()*4,sobrantes[1]);
-                    stb.insert(clave.length()*3,sobrantes[2]);
-                }
-                if(l==4){
-                    stb.insert(clave.length()*5,sobrantes[0]);
-                    stb.insert(clave.length()*4,sobrantes[1]);
-                    stb.insert(clave.length()*3,sobrantes[2]);
-                    stb.insert(clave.length()*2,sobrantes[3]);
-                }
+        if(l==1){
+            stb.insert(clave.length()*5,sobrantes[0]);
+        }
+        if(l==2){
+            stb.insert(clave.length()*5,sobrantes[0]);
+            stb.insert(clave.length()*4,sobrantes[1]);
+        }
+        if (l==3){
+            stb.insert(clave.length()*5,sobrantes[0]);
+            stb.insert(clave.length()*4,sobrantes[1]);
+            stb.insert(clave.length()*3,sobrantes[2]);
+        }
+        if(l==4){
+            stb.insert(clave.length()*5,sobrantes[0]);
+            stb.insert(clave.length()*4,sobrantes[1]);
+            stb.insert(clave.length()*3,sobrantes[2]);
+            stb.insert(clave.length()*2,sobrantes[3]);
+        }
 
         decodificado=stb.toString();
         decodificado=decodificado.replace('%',' ');
@@ -314,7 +315,7 @@ public class Tarea2 {
         }
         return cifrado.toString();
     }
-    
+
     public static void decodificacion(String s) {
         int codigo=3;
         String texto=codificacion(s);
