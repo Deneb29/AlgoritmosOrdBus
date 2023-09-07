@@ -7,9 +7,14 @@ import java.util.StringTokenizer;
 public class Tarea4 {
     public static void main(String[] args) {
         String s,i;
-        String [] nombres=new String[10];
+        String [] nombres=new String[5];
+        String res="";
 
         s=guardarString("Ingrese un texto");
+        for (int j=0;j< nombres.length;j++) {
+            nombres[j]=guardarString("Ingrese un texto");
+        }
+
         do {
             i = JOptionPane.showInputDialog("Seleccione la opcion deseada:\n" +
                     "1.- Leer String\n" +
@@ -30,49 +35,59 @@ public class Tarea4 {
                     "0.- Salir", null);
             switch (i){
                 case "1":
-                    s=guardarString("Ingrese un texto");
+                    for (int j=0;j< nombres.length;j++) {
+                        nombres[j]=guardarString("Ingrese un texto");
+                    }
                     break;
                 case "2":
-                    getLongitud(s);
+                    getLongitud(nombres);
                     break;
                 case "3":
-                    getLetras(s);
+                    getLetras(nombres);
                     break;
                 case "4":
-                    getDigitos(s);
+                    getDigitos(nombres);
                     break;
                 case "5":
-                    getEspacios(s);
+                    getEspacios(nombres);
                     break;
                 case "6":
-                    getCaracteres(s);
+                    getCaracteres(nombres);
                     break;
                 case "7":
-                    getPalabras(s);
+                    getPalabras(nombres);
                     break;
                 case "8":
-                    aMayusculas(s);
+                    aMayusculas(nombres);
                     break;
                 case "9":
-                    aMinusculas(s);
+                    aMinusculas(nombres);
                     break;
                 case "10":
-                    iniciaVocal(s);
+                    iniciaVocal(nombres);
                     break;
                 case "11":
-                    invertirString(s);
+                    invertirString(nombres);
                     break;
                 case "12":
-                    JOptionPane.showMessageDialog(null, "El string codificado es "+codificacion(s));
+                    res="";
+                    for (int j=0;j< nombres.length;j++) {
+                        res+=construirString(codificacion(nombres[j]));
+                    }
+                    JOptionPane.showMessageDialog(null, "Los strings codificados son " + res);
                     break;
                 case "13":
-                    decodificacion(s);
+                    decodificacion(nombres);
                     break;
                 case "14":
-                    JOptionPane.showMessageDialog(null, "El string codificado es "+codificacionJV(s));
+                    res="";
+                    for (int j=0;j< nombres.length;j++) {
+                        res+=construirString(codificacionJV(nombres[j]));
+                    }
+                    JOptionPane.showMessageDialog(null, "Los strings codificados son " + res);
                     break;
                 case "15":
-                    decodificacionJV(s);
+                    decodificacionJV(nombres);
                     break;
             }
         }while(!i.equals("0"));
@@ -81,12 +96,18 @@ public class Tarea4 {
         return JOptionPane.showInputDialog(mensaje,null).trim();
     }
     public static boolean isVocal(char c) {
-        return (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u'|| c == 'Ã¡'|| c == 'Ã©'|| c == 'Ã­'|| c == 'Ã³'|| c == 'Ãº'|| c == 'A'|| c == 'E'|| c == 'I'|| c == 'O'|| c == 'U'|| c == 'Ã'|| c == 'Ã‰'|| c == 'Ã'|| c == 'Ã“'|| c == 'Ãš');
+        return (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u'|| c == 'á'|| c == 'é'|| c == 'í'|| c == 'ó'|| c == 'ú'|| c == 'A'|| c == 'E'|| c == 'I'|| c == 'O'|| c == 'U'|| c == 'Á'|| c == 'É'|| c == 'Í'|| c == 'Ó'|| c == 'Ú');
     }
-    public static void getLongitud(String s){
-        JOptionPane.showMessageDialog(null, "La logitud del string es "+s.length());
+    public static void getLongitud(String[] s){
+        String res="";
+        for (int j=0;j< s.length;j++) {
+            res+=construirString(String.valueOf(s[j].length()));
+        }
+        JOptionPane.showMessageDialog(null, "Las longitudes son \n"+res);
     }
     public static String codificacionJV(String s){
+        // agarrar for de los metodos cambiados, meter todo el codigo dentro, cambiar las variables necesarias, guardar el resultado
+        //en res dentro del for con construirString, imprimir res despues del for
         String codificado = s.replace(' ', '%');
         String codificado2="";
         String [] codarray={"","","","",""};
@@ -116,183 +137,220 @@ public class Tarea4 {
         }
         return codificado2;
     }
-    public static void getLetras(String s){
-        int vocales,cons,digitos,letras;
-        char[] array;
-        array=s.toCharArray();
-        letras=cons=vocales=digitos=0;
-        for (char c:
-                array) {
-            if(Character.isAlphabetic(c)) {
-                letras++;
-            }
-            if(isVocal(c)){
-                vocales++;
-            }
-            if (!isVocal(c) && Character.isAlphabetic(c)) {
-                cons++;
-            }
-        }
-        JOptionPane.showMessageDialog(null, "El string "+s+" tiene "+letras+" letras, "+vocales+" vocales y "+cons+" consonantes");
-
-    }
-    public static void getDigitos(String s){
-        char[] array;
-        int digitos;
-        array=s.toCharArray();
-        digitos=0;
-
-        for (char c:
-                array) {
-            if(Character.isDigit(c)){
-                digitos++;
-            }
-        }
-        JOptionPane.showMessageDialog(null, "El string "+s+" tiene "+digitos+" digitos");
-    }
-    public static void getEspacios(String s){
-        char[] array;
-        int espacios;
-        array=s.toCharArray();
-        espacios=0;
-        for (char c:
-                array) {
-            if(Character.isWhitespace(c)){
-                espacios++;
-            }
-        }
-        JOptionPane.showMessageDialog(null, "El string "+s+" tiene "+espacios+" espacios en blanco");
-    }
-    public static void getCaracteres(String s){
-        char[] array;
-        int caracteres;
-        array=s.toCharArray();
-        caracteres=0;
-        for (char c:
-                array) {
-            if(!Character.isLetterOrDigit(c)&&!Character.isWhitespace(c)){
-                caracteres++;
-            }
-        }
-        JOptionPane.showMessageDialog(null, "El string "+s+" tiene "+caracteres+" caracteres especiales");
-    }
-    public static void getPalabras(String s){
-        StringTokenizer tokens;
-        tokens=new StringTokenizer(s," ");
-        JOptionPane.showMessageDialog(null, "El string "+s+" tiene "+tokens.countTokens()+" palabras");
-    }
-    public static void aMayusculas(String s){
-        JOptionPane.showMessageDialog(null,"El texto en mayusculas es "+s.toUpperCase());
-    }
-    public static void aMinusculas(String s){
-        JOptionPane.showMessageDialog(null,"El texto en minusculas es "+s.toLowerCase());
-    }
-    public static void iniciaVocal(String s){
-        StringTokenizer tokens;
-        int palabras;
-        tokens=new StringTokenizer(s," ");
-        palabras=0;
-
-        while (tokens.hasMoreElements()) {
-            if(isVocal(tokens.nextToken().toCharArray()[0])){
-                palabras++;
-            }
-        }
-        JOptionPane.showMessageDialog(null, "El string "+s+" tiene "+palabras+" palabras que comienzan con vocal");
-    }
-    public static void invertirString(String s){
-        String t;
-        t="";
-        for (int contador=(s.length()-1);contador>=0;contador--) {
-            t+=s.charAt(contador);
-        }
-        JOptionPane.showMessageDialog(null, "El string "+s+" invertido es "+t);
-    }
-    public static void decodificacionJV(String s){
-        String codificado ="";
-        codificado=codificacionJV(s);
-        int l;
-        String clave="JULIO";;
-        String [] codarray= {"","","","",""};
-        StringBuilder stb=new StringBuilder();//30241
-        int n;
-        String decodificado;
-        l=codificado.length()%clave.length();
-        int[]pos={2,5,3,1,4};
-
-        StringBuilder recortado=new StringBuilder(codificado);
-        char [] sobrantes=new char[l];
-        if(l==1){
-            sobrantes[0]= recortado.charAt(clave.length()*2);
-            recortado.deleteCharAt(clave.length()*2);
-        }
-        if(l==2){
-            recortado.deleteCharAt(clave.length()*2);
-            sobrantes[0]= recortado.charAt(clave.length()*2);
-            recortado.deleteCharAt(clave.length()*5);
-            sobrantes[1]= recortado.charAt(clave.length()*5);
-        }
-        if (l==3){
-            recortado.deleteCharAt(clave.length()*2);
-            sobrantes[0]= recortado.charAt(clave.length()*2);
-            recortado.deleteCharAt(clave.length()*5);
-            sobrantes[1]= recortado.charAt(clave.length()*5);
-            recortado.deleteCharAt(clave.length()*3);
-            sobrantes[2]= recortado.charAt(clave.length()*3);
-        }
-        if(l==4){
-            recortado.deleteCharAt(clave.length()*2);
-            sobrantes[0]= recortado.charAt(clave.length()*2);
-            recortado.deleteCharAt(clave.length()*5);
-            sobrantes[1]= recortado.charAt(clave.length()*5);
-            recortado.deleteCharAt(clave.length()*3);
-            sobrantes[2]= recortado.charAt(clave.length()*3);
-            recortado.deleteCharAt(clave.length());
-            sobrantes[3]= recortado.charAt(clave.length());
-        }
-        codificado=recortado.toString();
-        codarray = codificado.split("(?<=\\G.{" + clave.length() + "})");
-
-        if (codarray.length==1){
-            for (int m=0;m<codarray[0].length();m++){
-                for (n=0;n< codarray.length;n++) {
-                    int o=pos[m]-1;
-                    stb.append(codarray[n].charAt(o));
+    public static void getLetras(String[] s){
+        String res="";
+        for (int j=0;j< s.length;j++) {
+            int vocales,cons,letras;
+            char[] array;
+            array=s[j].toCharArray();
+            letras=cons=vocales=0;
+            for (char c: array) {
+                if(Character.isAlphabetic(c)) {
+                    letras++;
+                }
+                if(isVocal(c)){
+                    vocales++;
+                }
+                if (!isVocal(c) && Character.isAlphabetic(c)) {
+                    cons++;
                 }
             }
+            res+=construirString("El string "+s[j]+" tiene "+letras+" letras, "+vocales+" vocales y "+cons+" consonantes");
         }
-        else {
-            for (int m=0;m<codarray[0].length();m++){
-                for (n=0;n< codarray.length;n++) {
-                    int o=pos[n]-1;
-                    stb.append(codarray[o].charAt(m));
+
+        JOptionPane.showMessageDialog(null, "Las letras son \n"+res);
+    }
+    public static void getDigitos(String[] s){
+        String res="";
+        for (int j=0;j< s.length;j++) {
+            char[] array;
+            int digitos;
+            array=s[j].toCharArray();
+            digitos=0;
+            for (char c : array) {
+                if(Character.isDigit(c)){
+                    digitos++;
                 }
             }
+            res+=construirString("El string "+s[j]+" tiene "+digitos+" digitos");
         }
+        JOptionPane.showMessageDialog(null, "Los digitos son \n"+res);
+    }
+    public static void getEspacios(String[] s){
+        String res="";
+        for (int j=0;j< s.length;j++) {
+            char[] array;
+            int espacios;
+            array = s[j].toCharArray();
+            espacios = 0;
+            for (char c :
+                    array) {
+                if (Character.isWhitespace(c)) {
+                    espacios++;
+                }
+            }
+            res+=construirString("El string " + s[j] + " tiene " + espacios + " espacios en blanco");
+        }
+        JOptionPane.showMessageDialog(null, "Los espacios en blanco son \n"+res);
+    }
+    public static void getCaracteres(String[] s){
+        String res="";
+        for (int j=0;j< s.length;j++) {
+            char[] array;
+            int caracteres;
+            array = s[j].toCharArray();
+            caracteres = 0;
+            for (char c :
+                    array) {
+                if (!Character.isLetterOrDigit(c) && !Character.isWhitespace(c)) {
+                    caracteres++;
+                }
+            }
+            res+=construirString("El string " + s[j] + " tiene " + caracteres + " caracteres especiales");
+        }
+        JOptionPane.showMessageDialog(null, "Los caracteres especiales son \n"+res);
+    }
+    public static void getPalabras(String[] s){
+        String res="";
+        for (int j=0;j< s.length;j++) {
+            StringTokenizer tokens;
+            tokens = new StringTokenizer(s[j], " ");
+            res+=construirString("El string " + s[j] + " tiene " + tokens.countTokens() + " palabras");
+        }
+        JOptionPane.showMessageDialog(null, "Los numeros de palabras son\n"+res);
+    }
+    public static void aMayusculas(String[] s){
+        String res="";
+        for (int j=0;j< s.length;j++) {
+            res+=construirString("El texto en mayusculas es " + s[j].toUpperCase());
+        }
+        JOptionPane.showMessageDialog(null, "Las palabras en mayusculas son\n"+res);
+    }
+    public static void aMinusculas(String[] s){
+        String res="";
+        for (int j=0;j< s.length;j++) {
+            res+=construirString("El texto en mayusculas es " + s[j].toLowerCase());
+        }
+        JOptionPane.showMessageDialog(null, "Las palabras en minusculas son\n"+res);
+    }
+    public static void iniciaVocal(String[] s){
+        String res="";
+        for (int j=0;j< s.length;j++) {
+            StringTokenizer tokens;
+            int palabras;
+            tokens = new StringTokenizer(s[j], " ");
+            palabras = 0;
+
+            while (tokens.hasMoreElements()) {
+                if (isVocal(tokens.nextToken().toCharArray()[0])) {
+                    palabras++;
+                }
+            }
+            res+=construirString("El string " + s[j] + " tiene " + palabras + " palabras que comienzan con vocal");
+        }
+        JOptionPane.showMessageDialog(null, "Numeros de palabras con vocal\n"+res);
+    }
+    public static void invertirString(String[] s){
+        String res="";
+        for (int j=0;j< s.length;j++) {
+            String t;
+            t = "";
+            for (int contador = (s[j].length() - 1); contador >= 0; contador--) {
+                t += s[j].charAt(contador);
+            }
+            res+=construirString("El string invertido es "+t);
+        }
+        JOptionPane.showMessageDialog(null, "Los strings invertidos son\n"+res);
+    }
+    public static void decodificacionJV(String[] s){
+        String res="";
+        for (int j=0;j< s.length;j++) {
+            String codificado = "";
+            codificado = codificacionJV(s[j]);
+            int l;
+            String clave = "JULIO";
+            ;
+            String[] codarray = {"", "", "", "", ""};
+            StringBuilder stb = new StringBuilder();//30241
+            int n;
+            String decodificado;
+            l = codificado.length() % clave.length();
+            int[] pos = {2, 5, 3, 1, 4};
+
+            StringBuilder recortado = new StringBuilder(codificado);
+            char[] sobrantes = new char[l];
+            if (l == 1) {
+                sobrantes[0] = recortado.charAt(clave.length() * 2);
+                recortado.deleteCharAt(clave.length() * 2);
+            }
+            if (l == 2) {
+                recortado.deleteCharAt(clave.length() * 2);
+                sobrantes[0] = recortado.charAt(clave.length() * 2);
+                recortado.deleteCharAt(clave.length() * 5);
+                sobrantes[1] = recortado.charAt(clave.length() * 5);
+            }
+            if (l == 3) {
+                recortado.deleteCharAt(clave.length() * 2);
+                sobrantes[0] = recortado.charAt(clave.length() * 2);
+                recortado.deleteCharAt(clave.length() * 5);
+                sobrantes[1] = recortado.charAt(clave.length() * 5);
+                recortado.deleteCharAt(clave.length() * 3);
+                sobrantes[2] = recortado.charAt(clave.length() * 3);
+            }
+            if (l == 4) {
+                recortado.deleteCharAt(clave.length() * 2);
+                sobrantes[0] = recortado.charAt(clave.length() * 2);
+                recortado.deleteCharAt(clave.length() * 5);
+                sobrantes[1] = recortado.charAt(clave.length() * 5);
+                recortado.deleteCharAt(clave.length() * 3);
+                sobrantes[2] = recortado.charAt(clave.length() * 3);
+                recortado.deleteCharAt(clave.length());
+                sobrantes[3] = recortado.charAt(clave.length());
+            }
+            codificado = recortado.toString();
+            codarray = codificado.split("(?<=\\G.{" + clave.length() + "})");
+
+            if (codarray.length == 1) {
+                for (int m = 0; m < codarray[0].length(); m++) {
+                    for (n = 0; n < codarray.length; n++) {
+                        int o = pos[m] - 1;
+                        stb.append(codarray[n].charAt(o));
+                    }
+                }
+            } else {
+                for (int m = 0; m < codarray[0].length(); m++) {
+                    for (n = 0; n < codarray.length; n++) {
+                        int o = pos[n] - 1;
+                        stb.append(codarray[o].charAt(m));
+                    }
+                }
+            }
 
 
-        if(l==1){
-            stb.insert(clave.length()*5,sobrantes[0]);
-        }
-        if(l==2){
-            stb.insert(clave.length()*5,sobrantes[0]);
-            stb.insert(clave.length()*4,sobrantes[1]);
-        }
-        if (l==3){
-            stb.insert(clave.length()*5,sobrantes[0]);
-            stb.insert(clave.length()*4,sobrantes[1]);
-            stb.insert(clave.length()*3,sobrantes[2]);
-        }
-        if(l==4){
-            stb.insert(clave.length()*5,sobrantes[0]);
-            stb.insert(clave.length()*4,sobrantes[1]);
-            stb.insert(clave.length()*3,sobrantes[2]);
-            stb.insert(clave.length()*2,sobrantes[3]);
-        }
+            if (l == 1) {
+                stb.insert(clave.length() * 5, sobrantes[0]);
+            }
+            if (l == 2) {
+                stb.insert(clave.length() * 5, sobrantes[0]);
+                stb.insert(clave.length() * 4, sobrantes[1]);
+            }
+            if (l == 3) {
+                stb.insert(clave.length() * 5, sobrantes[0]);
+                stb.insert(clave.length() * 4, sobrantes[1]);
+                stb.insert(clave.length() * 3, sobrantes[2]);
+            }
+            if (l == 4) {
+                stb.insert(clave.length() * 5, sobrantes[0]);
+                stb.insert(clave.length() * 4, sobrantes[1]);
+                stb.insert(clave.length() * 3, sobrantes[2]);
+                stb.insert(clave.length() * 2, sobrantes[3]);
+            }
 
-        decodificado=stb.toString();
-        decodificado=decodificado.replace('%',' ');
-        JOptionPane.showMessageDialog(null, "El string decodificado es "+decodificado);
+            decodificado = stb.toString();
+            decodificado = decodificado.replace('%', ' ');
+            res+=construirString("El string decodificado es "+decodificado);
+        }
+        JOptionPane.showMessageDialog(null, "Los strings decodificados son "+res);
     }
 
     public static String codificacion(String texto) {
@@ -316,25 +374,32 @@ public class Tarea4 {
         return cifrado.toString();
     }
 
-    public static void decodificacion(String s) {
-        int codigo=3;
-        String texto=codificacion(s);
-        StringBuilder cifrado = new StringBuilder();
-        for (int i = 0; i < texto.length(); i++) {
-            if (texto.charAt(i) >= 'a' && texto.charAt(i) <= 'z') {
-                if ((texto.charAt(i) - codigo) < 'a') {
-                    cifrado.append((char) (texto.charAt(i) - codigo + 26));
-                } else {
-                    cifrado.append((char) (texto.charAt(i) - codigo));
-                }
-            } else if (texto.charAt(i) >= 'A' && texto.charAt(i) <= 'Z') {
-                if ((texto.charAt(i) - codigo) < 'A') {
-                    cifrado.append((char) (texto.charAt(i) - codigo + 26));
-                } else {
-                    cifrado.append((char) (texto.charAt(i) - codigo));
+    public static void decodificacion(String[] s) {
+        String res="";
+        for (int j=0;j< s.length;j++) {
+            int codigo = 3;
+            String texto = codificacion(s[j]);
+            StringBuilder cifrado = new StringBuilder();
+            for (int i = 0; i < texto.length(); i++) {
+                if (texto.charAt(i) >= 'a' && texto.charAt(i) <= 'z') {
+                    if ((texto.charAt(i) - codigo) < 'a') {
+                        cifrado.append((char) (texto.charAt(i) - codigo + 26));
+                    } else {
+                        cifrado.append((char) (texto.charAt(i) - codigo));
+                    }
+                } else if (texto.charAt(i) >= 'A' && texto.charAt(i) <= 'Z') {
+                    if ((texto.charAt(i) - codigo) < 'A') {
+                        cifrado.append((char) (texto.charAt(i) - codigo + 26));
+                    } else {
+                        cifrado.append((char) (texto.charAt(i) - codigo));
+                    }
                 }
             }
+            res+=construirString("El string decodificado es "+cifrado);
         }
-        JOptionPane.showMessageDialog(null, "El string decodificado es "+cifrado);
+        JOptionPane.showMessageDialog(null, "Los strings decodificados son "+res);
+    }
+    public static String construirString(String in){
+        return (in+"\n");
     }
 }
