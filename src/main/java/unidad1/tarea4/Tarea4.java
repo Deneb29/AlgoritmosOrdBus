@@ -1,6 +1,7 @@
 package unidad1.tarea4;
 
 import javax.swing.*;
+import java.util.Locale;
 import java.util.StringTokenizer;
 
 
@@ -10,7 +11,6 @@ public class Tarea4 {
         String [] nombres=new String[5];
         String res="";
 
-        s=guardarString("Ingrese un texto");
         for (int j=0;j< nombres.length;j++) {
             nombres[j]=guardarString("Ingrese un texto");
         }
@@ -32,6 +32,12 @@ public class Tarea4 {
                     "13.- Desencriptar\n" +
                     "14.- Encriptar JULIO VERNE \n" +
                     "15.- Desencriptar JULIO VERNE\n" +
+                    "16.- Buscar un nombre\n" +
+                    "17.- Empieza con\n" +
+                    "18.- Termina con\n" +
+                    "19.- Empieza con vocal\n" +
+                    "20.- Empieza con consonante\n" +
+                    "21.- Buscar coincidencias\n" +
                     "0.- Salir", null);
             switch (i){
                 case "1":
@@ -89,6 +95,25 @@ public class Tarea4 {
                 case "15":
                     decodificacionJV(nombres);
                     break;
+                case "16":
+                    buscarString(nombres);
+                    break;
+                case "17":
+                    empiezaCon(nombres);
+                    break;
+                case "18":
+                    terminaCon(nombres);
+                    break;
+                case "19":
+                    empiezaConVocal(nombres);
+                    break;
+                case "20":
+                    empiezaConConsonante(nombres);
+                    break;
+                case "21":
+                    buscarCoincidencias(nombres);
+                    break;
+
             }
         }while(!i.equals("0"));
     }
@@ -400,6 +425,73 @@ public class Tarea4 {
         JOptionPane.showMessageDialog(null, "Los strings decodificados son "+res);
     }
     public static String construirString(String in){
-        return (in+"\n");
+        return (in.toUpperCase()+"\n");
+    }
+
+    public static void buscarCoincidencias(String [] s){
+        String res="";
+        String in;
+        in=JOptionPane.showInputDialog("Ingrese en nombre a buscar").toUpperCase();
+        for (int j=0;j< s.length;j++) {
+            if(s[j].contains(in)) {
+                res += construirString(s[j]);
+            }
+        }
+        JOptionPane.showMessageDialog(null, "Se encontraron las siguientes coincidencias\n"+res);
+    }
+    public static void empiezaCon(String [] s){
+        String res="";
+        String in;
+        in=JOptionPane.showInputDialog("Ingrese el texto").toUpperCase();
+        for (int j=0;j< s.length;j++) {
+            if(s[j].startsWith(in)) {
+                res += construirString(s[j]);
+            }
+        }
+        JOptionPane.showMessageDialog(null, "Se encontraron las siguientes coincidencias\n"+res);
+    }
+    public static void terminaCon(String [] s){
+        String res="";
+        String in;
+        in=JOptionPane.showInputDialog("Ingrese el texto").toUpperCase();
+        for (int j=0;j< s.length;j++) {
+            if(s[j].endsWith(in)) {
+                res += construirString(s[j]);
+            }
+        }
+        JOptionPane.showMessageDialog(null, "Se encontraron las siguientes coincidencias\n"+res);
+    }
+    public static void empiezaConVocal(String [] s){
+        String res="";
+        for (int j=0;j< s.length;j++) {
+            char c;
+            c=s[j].charAt(0);
+            if(isVocal(c)) {
+                res += construirString(s[j]);
+            }
+        }
+        JOptionPane.showMessageDialog(null, "Se encontraron las siguientes coincidencias\n"+res);
+    }
+    public static void empiezaConConsonante(String [] s){
+        String res="";
+        for (int j=0;j< s.length;j++) {
+            char c;
+            c=s[j].charAt(0);
+            if(!isVocal(c) && Character.isAlphabetic(c)) {
+                res += construirString(s[j]);
+            }
+        }
+        JOptionPane.showMessageDialog(null, "Se encontraron las siguientes coincidencias\n"+res);
+    }
+    public static void buscarString(String [] s){
+        String res="";
+        String in;
+        in=JOptionPane.showInputDialog("Ingrese en nombre a buscar").toUpperCase();
+        for (int j=0;j< s.length;j++) {
+            if(s[j].equals(in)) {
+                res += construirString(s[j]);
+            }
+        }
+        JOptionPane.showMessageDialog(null, "Se encontraron las siguientes coincidencias\n"+res);
     }
 }
