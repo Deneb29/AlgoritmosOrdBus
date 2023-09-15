@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.util.StringTokenizer;
 
 public class Tarea7 {
     public static void main(String[] args) {
@@ -22,15 +23,59 @@ public class Tarea7 {
                     s=JOptionPane.showInputDialog("Ingrese un texto:\n");
                     break;
                 case "2":
-                    String k;
-                        correcto = JOptionPane.showInputDialog("Primera coincidencia: \n" +
-                                leerArchivo(1,s)+
-                                "¿Es correcta? \n" +
-                                "1.- Si \n" +
-                                "2.- No \n", null);
-                        if (correcto.equals("1")) {
-                            JOptionPane.showMessageDialog(null, "Palabra correcta: "+leerArchivo(1,s));
+                    String res="";
+                    String opcion="";
+                    String p1="";
+                    String p2="";
+                    String p3="";
+                    do{
+                        correcto = JOptionPane.showInputDialog("Ingrese un texto:", null);
+                        StringTokenizer tokens;
+                        if(!correcto.equals("")){
+                            tokens=new StringTokenizer(leerArchivo(3,correcto));
                         }
+                        else {
+                            tokens=new StringTokenizer("");
+                        }
+                        if(tokens.hasMoreElements()){
+                            p1= tokens.nextToken();
+                        }
+                        if(tokens.hasMoreElements()){
+                            p2= tokens.nextToken();
+                        }
+                        if(tokens.hasMoreElements()){
+                            p3= tokens.nextToken();
+                        }
+                        opcion = JOptionPane.showInputDialog("Elija la opcion correcta:\n"+
+                                "1.- "+p1+"\n"+
+                                "2.- "+p2+"\n"+
+                                "3.- "+p3+"\n"+
+                                "O elija entre las siguientes opciones: \n"+
+                                "4.- Agregar mi palabra: "+correcto+"\n"+
+                                "5.- Intentar con una palabra diferente"+"\n"+
+                                "6.- Imprimir texto"+"\n"+
+                                "0.- Salir", null);
+                        if (opcion.equals("1")) {
+                            res+=p1+" ";
+                            JOptionPane.showMessageDialog(null, "Texto hasta ahora: \n"+res);
+                        }
+                        if (opcion.equals("2")) {
+                            res+=p2+" ";
+                            JOptionPane.showMessageDialog(null, "Texto hasta ahora: \n"+res);
+                        }
+                        if (opcion.equals("3")) {
+                            res+=p3+" ";
+                            JOptionPane.showMessageDialog(null, "Texto hasta ahora: \n"+res);
+                        }
+                        if (opcion.equals("4")) {
+                            res+=correcto+" ";
+                            JOptionPane.showMessageDialog(null, "Texto hasta ahora: \n"+res);
+                        }
+                        if (opcion.equals("6")) {
+                            JOptionPane.showMessageDialog(null, "Texto hasta ahora: \n"+res);
+                        }
+                        p1=p2=p3="";
+                    }while (!opcion.equals("0"));
                     break;
                 case "3":
                     JOptionPane.showMessageDialog(null,"Coincidencias más comunes:\n"+leerArchivo(5,s));
@@ -48,7 +93,7 @@ public class Tarea7 {
             String texto = br.readLine();
             while(texto != null) {
                 if(texto.startsWith(s) && contador<veces){
-                    res+=texto+"\n";
+                    res+=texto+" ";
                     contador++;
                 }
                 texto = br.readLine();
@@ -58,15 +103,12 @@ public class Tarea7 {
             System.out.println("Error: Fichero no encontrado");
             ex.printStackTrace();
         }
-// Captura de cualquier otra excepción
         catch(Exception ex) {
             System.out.println("Error de lectura del fichero");
             ex.printStackTrace();
         }
-// Asegurar el cierre del fichero en cualquier caso
         finally {
             try {
-                // Cerrar el fichero si se ha podido abrir
                 if(br != null) {
                     br.close();
                 }
