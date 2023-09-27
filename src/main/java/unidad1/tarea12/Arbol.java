@@ -20,34 +20,32 @@ public class Arbol {
 	public Nodo getRaiz() {
 		return raiz;
 		}
-	
-	public void crearArbolBinario(int x,String texto) {
-		Nodo p, q;
-		if(raiz== null) {
-			raiz= new Nodo(x,texto); //raiz del arbol binario
-		}
-		else{ //avanza a los niveles del arbol binario
-			p = raiz;
-			q = raiz;
-			
-			while(q != null) {
-				p = q;
-				if(x < p.info) {
-					q = p.izquierdo; //avanza al hijo izquierdo
+
+	public void insertarNodo(int d, String nom){
+		Nodo nuevo = new Nodo(d,nom);
+		if (raiz == null){
+			raiz = nuevo;
+		}else{
+			Nodo auxiliar = raiz;
+			Nodo padre;
+			while(true){
+				padre=auxiliar;
+				if (d<auxiliar.info){
+					auxiliar=auxiliar.izquierdo;
+					if (auxiliar==null){
+						padre.izquierdo=nuevo;
+						return;
+					}
+				}else{
+					auxiliar=auxiliar.derecho;
+					if(auxiliar==null){
+						padre.derecho=nuevo;
+						return;
+					}
 				}
-				else {
-					q = p.derecho; //avanza al hijo derecho
-				}
-			}
-			
-			if(x < p.info) {
-				hijoIzquierdo(p, x,texto); //genera nuevo hijo izquierdo del nodo p
-			}
-			else {
-				hijoDerecho(p, x,texto); //genera nuevo hijo derecho del nodo p
 			}
 		}
-	}
+	}//
 	
 	
 	/* Recorrido en preorden*/

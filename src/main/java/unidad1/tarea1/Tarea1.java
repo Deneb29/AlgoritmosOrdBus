@@ -129,10 +129,10 @@ public class Tarea1 {
                     k=Integer.parseInt(guardarString("Ingrese la posicion desde donde empezar a buscaren el segundo texto(numero)"));
                     l=Integer.parseInt(guardarString("Ingrese la cantidad de caracteres a buscar"));
                     if(s.regionMatches(true,j,t,k,l)){
-                        JOptionPane.showMessageDialog(null,"La region buscada en el texto+"+s+" fue encontrada en "+t);
+                        JOptionPane.showMessageDialog(null,"La region buscada en el texto "+s+" fue encontrada en "+t);
                     }
                     else{
-                        JOptionPane.showMessageDialog(null,"La region buscada en el texto+"+s+" no fue encontrada en "+t);
+                        JOptionPane.showMessageDialog(null,"La region buscada en el texto "+s+" no fue encontrada en "+t);
                     }
                     break;
                 case "10":

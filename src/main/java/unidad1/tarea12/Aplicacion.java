@@ -23,11 +23,11 @@ public class Aplicacion {
 			switch (i){
 				case "1":
 					String st;
-					for(int j=0;j<5;j++){
-						System.out.println("Ingrese un texto");
-						st=sc.nextLine();
-						a.crearArbolBinario(j,st);
-					}
+					System.out.println("Ingrese un texto");
+					s=sc.nextLine();
+					System.out.println("Ingrese un valor");
+					int valor=sc.nextInt();
+					a.insertarNodo(valor,s);
 					break;
 				case "2":
 					a.entreOrden(a.raiz);

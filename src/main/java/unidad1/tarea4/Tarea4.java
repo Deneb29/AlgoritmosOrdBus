@@ -254,7 +254,7 @@ public class Tarea4 {
     public static void aMinusculas(String[] s){
         String res="";
         for (int j=0;j< s.length;j++) {
-            res+=construirString("El texto en mayusculas es " + s[j].toLowerCase());
+            res+=construirString("El texto en minusculas es " + s[j].toLowerCase());
         }
         JOptionPane.showMessageDialog(null, "Las palabras en minusculas son\n"+res);
     }
@@ -425,13 +425,13 @@ public class Tarea4 {
         JOptionPane.showMessageDialog(null, "Los strings decodificados son "+res);
     }
     public static String construirString(String in){
-        return (in.toUpperCase()+"\n");
+        return (in+"\n");
     }
 
     public static void buscarCoincidencias(String [] s){
         String res="";
         String in;
-        in=JOptionPane.showInputDialog("Ingrese en nombre a buscar").toUpperCase();
+        in=JOptionPane.showInputDialog("Ingrese en nombre a buscar");
         for (int j=0;j< s.length;j++) {
             if(s[j].contains(in)) {
                 res += construirString(s[j]);
@@ -442,7 +442,7 @@ public class Tarea4 {
     public static void empiezaCon(String [] s){
         String res="";
         String in;
-        in=JOptionPane.showInputDialog("Ingrese el texto").toUpperCase();
+        in=JOptionPane.showInputDialog("Ingrese el texto");
         for (int j=0;j< s.length;j++) {
             if(s[j].startsWith(in)) {
                 res += construirString(s[j]);
@@ -453,7 +453,7 @@ public class Tarea4 {
     public static void terminaCon(String [] s){
         String res="";
         String in;
-        in=JOptionPane.showInputDialog("Ingrese el texto").toUpperCase();
+        in=JOptionPane.showInputDialog("Ingrese el texto");
         for (int j=0;j< s.length;j++) {
             if(s[j].endsWith(in)) {
                 res += construirString(s[j]);
@@ -486,7 +486,7 @@ public class Tarea4 {
     public static void buscarString(String [] s){
         String res="";
         String in;
-        in=JOptionPane.showInputDialog("Ingrese en nombre a buscar").toUpperCase();
+        in=JOptionPane.showInputDialog("Ingrese en nombre a buscar");
         for (int j=0;j< s.length;j++) {
             if(s[j].equals(in)) {
                 res += construirString(s[j]);
