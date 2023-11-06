@@ -27,7 +27,7 @@ public class Aplicacion {
 					s=sc.nextLine();
 					System.out.println("Ingrese un valor");
 					int valor=sc.nextInt();
-					a.insertarNodo(valor,s);
+					a.insertarNodo(s);
 					break;
 				case "2":
 					a.entreOrden(a.raiz);

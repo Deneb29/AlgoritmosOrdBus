@@ -27,9 +27,7 @@ public class Aplicacion {
 				case "1":
 					System.out.println("Ingrese un texto");
 					s=sc.nextLine();
-					System.out.println("Ingrese un valor");
-					int valor=sc.nextInt();
-					a.insertarNodo(valor,s);
+					a.insertarNodo(s);
 					break;
 				case "2":
 					a.contarLetras(a.raiz);
@@ -58,8 +56,8 @@ public class Aplicacion {
 					break;
 				case "9":
 					System.out.println("Ingrese numero de nodo a borrar");
-					int num=sc.nextInt();
-					a.eliminar(a.raiz,num);
+					s=sc.nextLine();
+					a.eliminar(a.raiz,s);
 					break;
 				case "10":
 					System.out.println("Ingrese el parrafo a buscar");

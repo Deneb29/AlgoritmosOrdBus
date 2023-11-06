@@ -1,14 +1,13 @@
 package unidad1.tarea12;
 
-import javax.swing.*;
 
 public class Nodo {
-	int info;
+	//int info;
 	String texto, codificado;
 	Nodo izquierdo, derecho;
-	
-	public Nodo (int dato, String texto) {
-		info= dato;
+
+	public Nodo (String texto) {
+		//info= dato;
 		this.texto=texto;
 		this.codificado=codificacionJV(texto);
 		izquierdo = null;
@@ -129,7 +128,7 @@ public class Nodo {
 
 		decodificado=stb.toString();
 		decodificado=decodificado.replace('%',' ');
-		JOptionPane.showMessageDialog(null, "El string decodificado es "+decodificado);
+		System.out.println("El string decodificado es "+decodificado);
 	}
 
 }

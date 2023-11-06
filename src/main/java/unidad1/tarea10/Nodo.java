@@ -2,12 +2,12 @@ package unidad1.tarea10;
 
 
 public class Nodo {
-	int info;
+	//int info;
 	String texto, codificado;
 	Nodo izquierdo, derecho;
 	
-	public Nodo (int dato, String texto) {
-		info= dato;
+	public Nodo (String texto) {
+		//info= dato;
 		this.texto=texto;
 		this.codificado=codificacionJV(texto);
 		izquierdo = null;

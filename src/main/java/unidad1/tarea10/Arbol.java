@@ -7,22 +7,9 @@ public class Arbol {
 	public Arbol( ) {
 		raiz= null; //apuntador al arbol binario
 		}
-	//Genera nuevo hijo izquierdo 
-	public void hijoIzquierdo(Nodo p, int x, String texto) {
-		Nodo q = new Nodo(x,texto); p.izquierdo= q;
-		}
-	//Genera nuevo hijo derecho
-	public void hijoDerecho(Nodo p, int x, String texto) {
-		Nodo q = new Nodo(x,texto);
-		p.derecho= q;
-		}
-	//Retorna apuntador a raiz del arbol
-	public Nodo getRaiz() {
-		return raiz;
-		}
 
-	public void insertarNodo(int d, String nom){
-		Nodo nuevo = new Nodo(d,nom);
+	public void insertarNodo(String nom){
+		Nodo nuevo = new Nodo(nom);
 		if (raiz == null){
 			raiz = nuevo;
 		}else{
@@ -30,7 +17,7 @@ public class Arbol {
 			Nodo padre;
 			while(true){
 				padre=auxiliar;
-				if (d<auxiliar.info){
+				if (nom.compareToIgnoreCase(auxiliar.texto)<0){
 					auxiliar=auxiliar.izquierdo;
 					if (auxiliar==null){
 						padre.izquierdo=nuevo;
@@ -46,12 +33,14 @@ public class Arbol {
 			}
 		}
 	}//
-	
-	
+
+
+
+
 	/* Recorrido en preorden*/
 	public void preOrden(Nodo p) {
 		if(p != null) {
-			System.out.print(p.texto + "\t");
+			System.out.println(p.texto);
 			preOrden(p.izquierdo);
 			preOrden(p.derecho);
 			}
@@ -61,7 +50,7 @@ public class Arbol {
 	public void entreOrden(Nodo p) {
 		if(p != null) {
 			entreOrden(p.izquierdo);
-			System.out.print(p.texto + " \t");
+			System.out.println(p.texto);
 			entreOrden(p.derecho);
 		}
 	}
@@ -71,13 +60,13 @@ public class Arbol {
 		if(p != null) {
 			posOrden(p.izquierdo);
 			posOrden(p.derecho);
-			System.out.print(p.texto + "\t");
+			System.out.println(p.texto);
 			}
 	}
 	/* Recorrido en preorden*/
 	public void preOrdenCod(Nodo p) {
 		if(p != null) {
-			System.out.print(p.codificado+ "\t");
+			System.out.println(p.codificado);
 			preOrdenCod(p.izquierdo);
 			preOrdenCod(p.derecho);
 		}
@@ -87,7 +76,7 @@ public class Arbol {
 	public void entreOrdenCod(Nodo p) {
 		if(p != null) {
 			entreOrdenCod(p.izquierdo);
-			System.out.print(p.codificado+ "\t");
+			System.out.println(p.codificado);
 			entreOrdenCod(p.derecho);
 		}
 	}
@@ -97,15 +86,7 @@ public class Arbol {
 		if(p != null) {
 			posOrdenCod(p.izquierdo);
 			posOrdenCod(p.derecho);
-			System.out.print(p.codificado+ "\t");
-		}
-	}
-	public boolean estaVacio(){
-		if(raiz==null){
-			return true;
-		}
-		else {
-			return false;
+			System.out.println(p.codificado);
 		}
 	}
 	public void encontrarPalabra(Nodo p, String s){
@@ -114,7 +95,7 @@ public class Arbol {
 				encontrarPalabra(p.izquierdo,s);
 			}
 			if(p.texto.equals(s)){
-				System.out.println("Se ha encontrado la palabra "+s+ " con el numero "+p.info);
+				System.out.println("Se ha encontrado la palabra "+s);
 			}
 			if(p.derecho!=null){
 				encontrarPalabra(p.derecho,s);
@@ -194,7 +175,7 @@ public class Arbol {
 			contarLetras(p.derecho);
 		}
 	}
-	public void cambiarParrafo(String actual, String nuevo,Nodo p){
+	public void cambiarParrafo(String actual, String nuevo, Nodo p){
 		if(p != null) {
 			if(p.izquierdo!=null){
 				encontrarPalabra(p.izquierdo,actual);
@@ -238,42 +219,42 @@ public class Arbol {
 
 		return 1 + Math.max(altizq, altder);
 	}
-	public Nodo eliminar(Nodo nodo, int busqueda) {
+	public Nodo eliminar(Nodo nodo, String busqueda) {
 		if (nodo == null) {
 			return nodo;
 		}
-		if (busqueda > nodo.info) {
+		if (busqueda.compareToIgnoreCase(nodo.texto)>0) {
 			nodo.derecho=this.eliminar(nodo.derecho, busqueda);
-		} else if (busqueda < nodo.info) {
+		} else if (busqueda.compareToIgnoreCase(nodo.texto)<0) {
 			nodo.izquierdo=this.eliminar(nodo.izquierdo, busqueda);
 		} else {
 			if (nodo.izquierdo == null && nodo.derecho == null) {
 				nodo = null;
 			} else if (nodo.derecho != null) {
-				nodo.info=this.sucesor(nodo);
-				nodo.derecho=this.eliminar(nodo.derecho, nodo.info);
+				nodo.texto=this.sucesor(nodo);
+				nodo.derecho=this.eliminar(nodo.derecho, nodo.texto);
 			} else {
-				nodo.info=this.predecesor(nodo);
-				nodo.izquierdo=this.eliminar(nodo.izquierdo, nodo.info);
+				nodo.texto=this.predecesor(nodo);
+				nodo.izquierdo=this.eliminar(nodo.izquierdo, nodo.texto);
 			}
 		}
 		return nodo;
 	}
 
-	private int sucesor(Nodo nodo) {
+	private String sucesor(Nodo nodo) {
 		nodo = nodo.derecho;
 		while (nodo.izquierdo != null) {
 			nodo = nodo.izquierdo;
 		}
-		return nodo.info;
+		return nodo.texto;
 	}
 
-	private int predecesor(Nodo nodo) {
+	private String predecesor(Nodo nodo) {
 		nodo = nodo.izquierdo;
 		while (nodo.derecho != null) {
 			nodo = nodo.derecho;
 		}
-		return nodo.info;
+		return nodo.texto;
 	}
 	public void aMayusculas(Nodo p){
 		if(p != null) {

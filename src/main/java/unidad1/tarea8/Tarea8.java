@@ -65,8 +65,8 @@ public class Tarea8 {
         }
     }
     public static int factorial(int num){
-        if(num<2 && num>-2){
-            return num;
+        if(num==0){
+            return 1;
         }
         else{
             if(num >0){
