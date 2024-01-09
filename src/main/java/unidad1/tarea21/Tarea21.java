@@ -1,6 +1,7 @@
 package unidad1.tarea21;
 
 import javax.swing.*;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -9,15 +10,16 @@ import java.util.*;
 public class Tarea21 {
     public static void main(String[] args) throws IOException {
         String i;
-        //int[]array= {54,76,32,98,23,65,34,83,92,12};
-        int[]aux;
+        int[]array= {54,76,32,98,23,65,34,83,92,12};
+        int num;
         long startTime,endTime,totalTime;
         List<String> lines = Files.readAllLines(Paths.get("D:\\Proyectos\\AlgoritmosOrdBus\\src\\main\\java\\unidad1\\tarea21\\numeros.txt"));
-        int[]array=new int[100000];
+        array=new int[2000000];
         Object[] B= lines.toArray();
         for(int j=0;j<array.length;j++){
             array[j]=Integer.parseInt(B[j].toString());
         }
+        array[76]=12;
         do {
             int[]stats;
             i = JOptionPane.showInputDialog("Seleccione la opcion deseada:\n" +
@@ -32,6 +34,11 @@ public class Tarea21 {
                     "9.- Arbol binario\n" +
                     "10.- Heap\n" +
                     "11.- Gnome\n" +
+                    "12.- Busqueda lineal\n" +
+                    "13.- Busqueda lineal ordenada\n" +
+                    "14.- Busqueda binaria\n" +
+                    "15.- Busqueda indexada\n" +
+                    "16.- Ordenar 2 millones de datos\n" +
                     "0.- Salir", null);
 
             switch (i){
@@ -77,7 +84,7 @@ public class Tarea21 {
                     stats=radixSort(array);
                     endTime=System.nanoTime();
                     totalTime = endTime - startTime;
-                    imprimir("Radix",array,stats[0],stats[1],totalTime);
+                    imprimir("Radix",array,stats[0], stats[1], totalTime);
                     break;
                 case "7":
                     startTime=System.nanoTime();
@@ -114,6 +121,69 @@ public class Tarea21 {
                     totalTime = endTime - startTime;
                     imprimir("Gnome",array,stats[0],stats[1],totalTime);
                     break;
+                case "12":
+                    num=Integer.parseInt(JOptionPane.showInputDialog("Ingrese un numero"));
+                    startTime=System.nanoTime();
+                    stats=busquedaLineal(num,array);
+                    endTime=System.nanoTime();
+                    totalTime = endTime - startTime;
+                    imprimirbus("Busqueda lineal",array,stats[0],stats[1],totalTime);
+                    break;
+                case "13":
+                    num=Integer.parseInt(JOptionPane.showInputDialog("Ingrese un numero"));
+                    startTime=System.nanoTime();
+                    stats=busquedaLinealOrdenada(num,array);
+                    endTime=System.nanoTime();
+                    totalTime = endTime - startTime;
+                    imprimirbus("Busqueda lineal ordenada",array,stats[0],stats[1],totalTime);
+                    break;
+                case "14":
+                    num=Integer.parseInt(JOptionPane.showInputDialog("Ingrese un numero"));
+                    startTime=System.nanoTime();
+                    stats=busquedaBinaria(num,array);
+                    endTime=System.nanoTime();
+                    totalTime = endTime - startTime;
+                    imprimirbus("Busqueda binaria",array,stats[0],stats[1],totalTime);
+                    break;
+                case "15":
+                    num=Integer.parseInt(JOptionPane.showInputDialog("Ingrese un numero"));
+                    startTime=System.nanoTime();
+                    stats=busquedaIndexada(array, array.length,num);
+                    endTime=System.nanoTime();
+                    totalTime = endTime - startTime;
+                    imprimirbus("Busqueda indexada",array,stats[0],stats[1],totalTime);
+                    break;
+                case "16":
+                    startTime=System.nanoTime();
+                    stats=mergeSort(array, array.length);
+                    endTime=System.nanoTime();
+                    totalTime = endTime - startTime;
+                    for(int j=0;j<array.length;j++){
+                        try
+                        {
+                            String filename= "C:\\Users\\rober\\Desktop\\ordenado.txt";
+                            FileWriter fw = new FileWriter(filename,true);
+                            fw.write(array[j]+"\n");
+                            fw.close();
+                        }
+                        catch(IOException ioe)
+                        {
+                            System.err.println("IOException: " + ioe.getMessage());
+                        }
+                    }
+                    try
+                    {
+                        String filename= "C:\\Users\\rober\\Desktop\\ordenado.txt";
+                        FileWriter fw = new FileWriter(filename,true);
+                        fw.write(imprimirString("Merge",array,stats[0],stats[1],totalTime)+"\n");
+                        fw.close();
+                    }
+                    catch(IOException ioe)
+                    {
+                        System.err.println("IOException: " + ioe.getMessage());
+                    }
+
+                    break;
             }
         }while (!i.equals("0"));
     }
@@ -122,6 +192,26 @@ public class Tarea21 {
                 Arrays.toString(A) +
                 "\nComparaciones: "+comp+
                 "\nMovimientos: "+mov+
+                "\nTiempo de ejecución: "+time+" nanosegundos");
+    }
+    public static String imprimirString (String nombre,int[]A, int comp, int mov,long time){
+        return nombre+" sort\n"+
+                "\nComparaciones: "+comp+
+                "\nMovimientos: "+mov+
+                "\nTiempo de ejecución: "+time+" nanosegundos";
+    }
+    public static void imprimirbus(String nombre,int[]A, int comp, int index,long time){
+        String mensaje="";
+        if(index>-1){
+            mensaje="Se encontró el número";
+        }
+        else{
+            mensaje="No se encontró el número";
+        }
+        JOptionPane.showMessageDialog(null,nombre+"\n"+
+                Arrays.toString(A) +
+                "\nComparaciones: "+comp+
+                "\nSe encontró: "+mensaje+
                 "\nTiempo de ejecución: "+time+" nanosegundos");
     }
     public static int[] insercion(int[] A){
@@ -264,57 +354,7 @@ public class Tarea21 {
         }
         return new int[]{comp,mov};
     }
-    public static int[] radixSort(int[] arr){
-        int comp=0;
-        int mov=0;
-        if(arr.length == 0)
-            return new int[]{comp,mov};
 
-        int[][] np = new int[arr.length][2];
-        int[] q = new int[0x100];
-        int i,j,k,l,f = 0;
-
-        for(k=0;k<4;k++){
-            for(i=0;i<(np.length-1);i++) {
-                np[i][1] = i + 1;
-            }
-            np[i][1] = -1;
-
-            for(i=0;i<q.length;i++) {
-                q[i] = -1;
-            }
-
-            for(f=i=0;i<arr.length;i++){
-                j = ((0xFF<<(k<<3))&arr[i])>>(k<<3);
-                comp++;
-                if(q[j] == -1){
-                    l = q[j] = f;
-                }
-
-                else{
-                    l = q[j];
-                    while(np[l][1] != -1){
-                        l = np[l][1];
-                    }
-                    mov++;
-                    np[l][1] = f;
-                    l = np[l][1];
-                }
-                f = np[f][1];
-                np[l][0] = arr[i];
-                np[l][1] = -1;
-                mov+=2;
-            }
-
-            for(l=q[i=j=0];i<0x100;i++) {
-                for (l = q[i]; l != -1; l = np[l][1]) {
-                    mov++;
-                    arr[j++] = np[l][0];
-                }
-            }
-        }
-        return new int[]{comp,mov};
-    }
     public static int[] mergeSort(int[] a, int n) {
         int comp=0;
         int mov=0;
@@ -374,6 +414,7 @@ public class Tarea21 {
 
         for (int gap = n / 2; gap > 0; gap /= 2) {
             for (int i = gap; i < n; i++) {
+                comp++;
                 int key = arrayToSort[i];
                 int j = i;
                 while (j >= gap && arrayToSort[j - gap] > key) {
@@ -408,21 +449,21 @@ public class Tarea21 {
         int n = arr.length;
         int[]h;
 
-        // Build max heap
+
         for (int i = n / 2 - 1; i >= 0; i--) {
             h=heapify(arr, n, i);
             comp+=h[0];
             mov+=h[1];
         }
 
-        // Heap sort
+
         for (int i = n - 1; i >= 0; i--) {
             int temp = arr[0];
             arr[0] = arr[i];
             arr[i] = temp;
             mov+=2;
 
-            // Heapify root element
+
             h=heapify(arr, i, 0);
             comp+=h[0];
             mov+=h[1];
@@ -434,7 +475,7 @@ public class Tarea21 {
         int comp=0;
         int mov=0;
         int[]h;
-        // Find largest among root, left child and right child
+
         int largest = i;
         int l = 2 * i + 1;
         int r = 2 * i + 2;
@@ -447,7 +488,7 @@ public class Tarea21 {
         if (r < n && arr[r] > arr[largest])
             largest = r;
 
-        // Swap and continue heapifying if root is not largest
+
         comp++;
         if (largest != i) {
             int swap = arr[i];
@@ -486,4 +527,165 @@ public class Tarea21 {
         }
         return new int[]{comp,mov};
     }
+    public static int[] radixSort(int[] input) {
+        int comp=0;
+        int mov=0;
+        final int RADIX = 10;
+
+
+        List<Integer>[] bucket = new ArrayList[RADIX];
+
+        for (int i = 0; i < bucket.length; i++) {
+            bucket[i] = new ArrayList<Integer>();
+        }
+
+
+        boolean maxLength = false;
+        int tmp = -1, placement = 1;
+        while (!maxLength) {
+            maxLength = true;
+
+            // split input between lists
+            for (Integer i : input) {
+                tmp = i / placement;
+                bucket[tmp % RADIX].add(i);
+                mov++;
+                comp++;
+                if (maxLength && tmp > 0) {
+                    maxLength = false;
+                }
+            }
+
+
+            int a = 0;
+            for (int b = 0; b < RADIX; b++) {
+                for (Integer i : bucket[b]) {
+                    mov++;
+                    input[a++] = i;
+                }
+                bucket[b].clear();
+            }
+
+
+            placement *= RADIX;
+        }
+        return new int[]{comp,mov};
+    }
+    public static int[] busquedaLineal(int X, int[] A) {
+        int comp=0;
+        int encontrado;
+        int i = 0;
+        int n = A.length-1;
+        while (i < n && A[i] != X) {
+            comp++;
+            i++;
+        }
+        if(i>=n){
+            encontrado=-1;
+        }
+        else{
+            encontrado= i;
+        }
+        return new int[]{comp,encontrado};
+        /* Si se encuentra el elemento se devuelve su posición sino se devuelve -1 (indica que el elemento no está)*/
+    }
+    public static int[] busquedaLinealOrdenada(int X, int[] array) {
+        int[]A=array;
+        gnomeSort(A,A.length);
+        int comp=0;
+        int encontrado;
+        int i = 0;
+        int n = A.length-1;
+        while (i < n && A[i] != X) {
+            comp++;
+            i++;
+        }
+        if(i>=n){
+            encontrado=-1;
+        }
+        else{
+            encontrado= i;
+        }
+        return new int[]{comp,encontrado};
+        /* Si se encuentra el elemento se devuelve su posición sino se devuelve -1 (indica que el elemento no está)*/
+    }
+    public static int[] busquedaBinaria(int X, int[] array){
+        int[]A=array;
+        gnomeSort(A,A.length);
+        int comp=0;
+        int encontrado;
+        encontrado= -1;
+        int l = 0, r = A.length - 1;
+        while (l <= r) {
+            int m = l + (r - l) / 2;
+
+            comp++;
+            if (A[m] == X)
+                encontrado= m;
+
+            comp++;
+            if (A[m] < X)
+                l = m + 1;
+
+
+            else
+                r = m - 1;
+        }
+
+
+        return new int[]{comp,encontrado};
+    }
+    public static int[] busquedaIndexada(int A[], int n, int k) {
+        int[]arr=A;
+        gnomeSort(arr,arr.length);
+        int comp=0;
+        int encontrado;
+        int elements[] = new int[100000];
+        int indices[] = new int[100000];
+        int temp, i;
+        int j = 0, ind = 0, start = 0, end = 0, set = 0;
+        for (i = 0; i < n; i += 3) {
+
+
+            elements[ind] = arr[i];
+
+
+            indices[ind] = i;
+            ind++;
+        }
+        comp++;
+        if (k < elements[0]) {
+            encontrado=-1;
+            return new int[]{comp,encontrado};
+        }
+        else {
+            for (i = 1; i <= ind; i++) {
+                comp++;
+                if (k <= elements[i]) {
+                    start = indices[i - 1];
+                    set = 1;
+                    end = indices[i];
+                    break;
+                }
+            }
+        }
+        if (set == 0) {
+            start = indices[i - 1];
+            end = n;
+        }
+        for (i = start; i <= end; i++) {
+            comp++;
+            if (k == arr[i]) {
+                j = 1;
+                break;
+            }
+        }
+        if (j == 1)
+            encontrado=i;
+        else
+            encontrado=-1;
+        return new int[]{comp,encontrado};
+    }
+
+
 }
